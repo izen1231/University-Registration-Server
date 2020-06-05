@@ -24,13 +24,14 @@ class TodoController(val todoRepository: TodoRepository){
 
     @RequestMapping(path = ["/{todoId}"], method = [RequestMethod.PUT])
     @ResponseStatus(HttpStatus.OK)
-    fun updateTodo(@RequestBody todo: Todo, @PathVariable("todoId") todoId: Long){
+    fun updateTodo(@RequestBody todo: Todo, @PathVariable("todoId") todoId: Long): Optional<Todo> {
         var target: Todo = todoRepository.findById(todoId).get()
         target.title = todo.title
         target.description = todo.description
         target.finished = todo.finished
 
         todoRepository.save(target)
+        return todoRepository.findById(todoId)
     }
 
     @RequestMapping(path = ["/{todoId}"], method = [RequestMethod.DELETE])
