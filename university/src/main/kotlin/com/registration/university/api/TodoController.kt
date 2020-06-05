@@ -1,6 +1,9 @@
 package com.registration.university.api
 
+import com.sun.istack.internal.logging.Logger
+import org.hibernate.bytecode.BytecodeLogger.LOGGER
 import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import java.util.*
 import javax.persistence.Id
@@ -35,8 +38,11 @@ class TodoController(val todoRepository: TodoRepository){
     }
 
     @RequestMapping(path = ["/{todoId}"], method = [RequestMethod.DELETE])
-    fun deleteTodo(@PathVariable("todoId")todoId: Long){
+    fun deleteTodo(@PathVariable("todoId")todoId: Long): ResponseEntity<String> {
         todoRepository.deleteById(todoId)
+
+        return ResponseEntity.ok("Entity deleted");
+
     }
 }
 
